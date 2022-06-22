@@ -153,26 +153,122 @@ let slice: &amp;str = &amp;s[0..2]; // "slice" will contain "he"
 <span class="fragment fade-in-then-semi-out">// Does not support indexing
 let s: &amp;str = "hello world!";
 <span class="fragment strike">let first_char = s[0];</span> // Err</span>  
-</code></pre></section><section><h3>String Literal</h3><pre><code class="rust" data-noescape=""><span class="fragment fade-in-then-semi-out">// &amp;str
-let s: &amp;str = "hello world!";</span>
+</code></pre></section><section><h3>Tuples</h3><li class="fragment fade-in-then-semi-out">Bundle of individual elements</li><li class="fragment fade-in-then-semi-out">The elements can have different types</li><pre><code class="rust" data-noescape=""><span class="fragment fade-in-then-semi-out">// Tuple declaration
+let tuple_a: (i32, f64, u8) = (0, 1.0, 2);</span>
 
-<span class="fragment fade-in-then-semi-out">// str is not valid
-<span class="fragment strike">let s: str = "hello world!";</span> // Err</span>
+<span class="fragment fade-in-then-semi-out">// Destructuring a tuple
+let (a0, a1, a2) = tuple_a; // "a0" is 0, "a1" is 1.0, "a2" is 2</span>
 
-<span class="fragment fade-in-then-semi-out">// Fundamentally immutable
-<span class="fragment strike">let mut s: &amp;str = "hello world!";</span> // Err</span>
+<span class="fragment fade-in-then-semi-out">// Element types can be inferred
+let tuple_a = (0, 1.0, 2);</span>
 
-<span class="fragment fade-in-then-semi-out">// Copyable
-let s: &amp;str = "hello world!";
-let x = s;
-let y = s; // Ok</span>
+<span class="fragment fade-in-then-semi-out">// Accessing an element by index
+let a0 = tuple_a.0; // "b0" is 0
+let a1 = tuple_a.1; // "b1" is 1.0
+let a2 = tuple_a.2; // "b2" is 2</span>
+
+<span class="fragment fade-in-then-semi-out">// Tuple is copyable if all elements are
+let tuple_a = (0, 1.0, 2);
+let tuple_b = tuple_a;
+let tuple_c = tuple_a; // Ok</span>
+
+<span class="fragment fade-in-then-semi-out">// Tuple is not copyable if some element isn't
+let tuple_a = (0, String::from("hello"), 2);
+let tuple_b = tuple_a;
+<span class="fragment strike">let tuple_b = tuple_a;</span> // Err</span>
+
+<span class="fragment fade-in-then-semi-out">let tuple_a = (String::from("hello"), String::from("world"));
+let a0 = tuple_a.0; // "tuple_a" gets partially consumed
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a0 = tuple_a.0;</span> // Err, first element has already been consumed</span>
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let tuple_b = tuple_a;</span> // Err, first element has already been consumed</span></span>
+<span class="fragment fade-in-then-semi-out">let a1 = tuple_a.1; // Ok, second element has not been consumed</span>
+
+<span class="fragment fade-in-then-semi-out">fn access_elements(tuple_a: &amp;(i32, String)) {
+  <span class="fragment fade-in-then-semi-out">let (a0, a1, a2) = tuple_a; // "a0": &amp;i32, "a1": &amp;String </span>
+  <span class="fragment fade-in-then-semi-out">let a0 = tuple_a.0; // "a0" is of type i32, i32 is copied</span>
+  <span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a1 = tuple_a.1;</span> // Err, cannot consume the String since we only have a ref</span>
+  <span class="fragment fade-in-then-semi-out">let a1 = &amp;tuple_a.1; // Ok, "a1" is of type &amp;String</span>
+}</span>
+</code></pre></section><section><h3>Arrays</h3><li class="fragment fade-in-then-semi-out">Ordered sequence</li><li class="fragment fade-in-then-semi-out">Fixed length</li><li class="fragment fade-in-then-semi-out">Elements must have the same type</li><pre><code class="rust" data-noescape=""><span class="fragment fade-in-then-semi-out">// Array declaration
+let array_a: [usize; 4] = [0, 1, 2, 3];</span>
+
+<span class="fragment fade-in-then-semi-out">// Accessing by index
+let a0 = array_a[0]; // "a0" contains 1</span>
+
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a0 = array_a[4];</span> // Out of bounds err</span>
+
+<span class="fragment fade-in-then-semi-out">// Destructuring
+
+// "a0" contains 0, "rest_of_array" contains [1, 2, 3]
+let [a0, rest_of_array @ ..] = array_a;
+<span class="fragment fade-in-then-semi-out">// "a0" contains 0, "a1" contains 1, "rest_of_array" contains [2, 3]
+let [a0, a1, rest_of_array @ ..] = array_a;</span></span>
+
+<span class="fragment fade-in-then-semi-out">let array_a = [String::from("hello"), String::from("world")];
+let a0 = array_a[0]; // "array" gets partially consumed
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a0 = array_a[0]; </span> // Err, first element has already been consumed</span>
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let array_b = array_a;</span> // Err, first element has already been consumed</span></span>
+<span class="fragment fade-in-then-semi-out">let a1 = array_a[1]; // Ok, second element has not been consumed</span>
+
+<span class="fragment fade-in-then-semi-out">fn access_elements_integer_array(array_a: &amp;[i32]) { // Array references don't need a known size
+  <span class="fragment fade-in">let a0 = array_a[0]; // "a0" is of type i32, i32 is copied</span>
+  <span class="fragment fade-in-then-semi-out">let a0 = array_a[0]; // Ok</span>
+}</span>
+
+<span class="fragment fade-in-then-semi-out">fn access_elements_string_array(array_a: &amp;[String]) {
+  <span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a0 = array_a[0];</span> // Err, cannot consume the String since we only have a ref</span>
+  <span class="fragment fade-in-then-semi-out">let a0 = &amp;array_a[0]; // Ok, "a0" is of type &amp;String</span>
+  <span class="fragment fade-in-then-semi-out">let a0 = &amp;array_a[0]; // Ok, "a0" is of type &amp;String</span>
+}</span>
 
 <span class="fragment fade-in-then-semi-out">// Sliceable
-let s: &amp;str = "hello world!";
-let slice: &amp;str = &amp;s[0..2]; // "slice" will contain "he" 
-                            // Notice the &amp;</span>
+let array_a = [0, 1, 2, 3];
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let array_slice = array_a[0..2];</span> // Err, cannot have a slice without a reference</span>
+<span class="fragment fade-in-then-semi-out">let array_slice = &amp;array_a[0..2]; // Ok, array_slice will be a reference to [0, 1]</span></span>
+</code></pre></section><section><h3>For In and Iterators</h3><li class="fragment fade-in-then-semi-out">For in can iterate over any iterator</li><pre><code class="rust" data-noescape=""><span class="fragment fade-in-then-semi-out">let array_a = [0, 1, 2, 3];
+for i in array {
+  // i will be 0, 1, 2, 3
+}</span>
 
-<span class="fragment fade-in-then-semi-out">// Does not support indexing
-let s: &amp;str = "hello world!";
-<span class="fragment strike">let first_char = s[0];</span> // Err</span>  
-</code></pre></section></div></div><script type="module" src="./lesson-1/f97af496.js"></script></body></html>
+<span class="fragment fade-in-then-semi-out">let array_a = [0, 1, 2, 3];
+for i in array.iter() { // .iter() produces an iterator
+  // i will be 0, 1, 2, 3
+}</span>
+
+<span class="fragment fade-in-then-semi-out">let array_a = [0, 1, 2, 3];
+let array_a1: Vec&lt;usize&gt; = array_a.iter() 
+  <span class="fragment fade-in">.map(|integer| integer + 1) // Executes the closure and maps the result</span>
+  <span class="fragment fade-in">.collect();  // Collect converts an iterator into a vector, "array_a1" will contain vec![1, 2, 3, 4]</span>
+<span class="fragment fade-in">let array_a2 = array_a1; // Ok, .iter() doesn't consume "array_a"</span></span>
+
+<span class="fragment fade-in-then-semi-out">let array_a = [0, 1, 2, 3];
+let array_a1 = array_a.into_iter() // .into_iter() also produces an iterator
+  .map(|integer| integer + 1) // Executes the closure and maps the result
+  .collect(); // Collect converts an iterator into a vector, "array_a1" will contain vec![1, 2, 3, 4]
+<span class="fragment fade-in">let array_a2 = array_a1; // Ok, "array_a" is copiable</span></span>
+  
+<span class="fragment fade-in-then-semi-out">let array_b = [String::from("hello"), String::from("world")];
+let array_b1: Vec&lt;&amp;String&gt; = array_a.iter()
+  .filter(|s: &amp;&amp;String| s.starts_with('h')) // Only return the elements for which the closure returns true
+  .collect(); // Collect converts an iterator into a vector, "array_b1" will contain vec![&amp;String::from("hello")]
+<span class="fragment fade-in">let array_b1 = array_b; // Ok, .iter() doesn't consume "array_a"</span></span>
+
+<span class="fragment fade-in-then-semi-out">let array_b = [String::from("hello"), String::from("world")];
+let array_b1: Vec&lt;String&gt; = array_a.into_iter()
+  .filter(|s: &amp;String| s.starts_with('h')) // Only return the elements for which the closure returns true
+  .collect(); // Collect converts an iterator into a vector, "array_b1" will contain vec![String::from("hello")]
+<span class="fragment fade-in"><span class="fragment strike">let array_b1 = array_b;</span> // Err, .into_iter() consumed "array_a"</span></span>
+</code></pre></section><section><h3>println</h3><li class="fragment fade-in-then-semi-out">Declarative macro<ul><li class="fragment fade-in-then-semi-out">Similar to functions, but invoked with '!'</li><li class="fragment fade-in-then-semi-out">We won't cover them for a long time</li></ul></li><pre><code class="rust" data-noescape=""><span class="fragment fade-in-then-semi-out">fn main() {
+  // Output to stdout
+  println!("Hello world!");
+
+  <span class="fragment fade-in-then-semi-out">let x = 0;
+  let y = 1;
+  println!("x is equal to {}, y is equal to {}", x, y); // will print "x is equal to 0, y is equal to 1"</span>
+
+  <span class="fragment fade-in-then-semi-out">let array = [String::from("hello"), String::from("world")];
+  <span class="fragment fade-in-then-semi-out"><span class="fragment strike">println!("array is equal to {}", array);</span> // Err, compound types cannot be printed with {}</span>
+  <span class="fragment fade-in">println!("array is equal to {:?}", array); // Ok, will print "array is equal to ["hello", "world"]"</span>
+  <span class="fragment fade-in">println!("array is equal to {:?}", array); // Ok, println! doesn't consume</span></span>
+}</span>
+  </code></pre></section></div></div><script type="module" src="./lesson-1/f97af496.js"></script></body></html>

@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "reveal.js": "^4.3.1",
-    "reveal.js-nested-fragments": "^0.0.1"
+    "reveal.js-nested-fragments": "^0.0.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",

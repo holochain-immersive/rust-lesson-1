@@ -17,6 +17,7 @@
         font-family: sans-serif;
         background-color: #ededed;
         --r-main-font-size: 24px;
+        --r-heading-margin: 20px 0 12px 0;
       }
 
       .slides {
@@ -35,11 +36,31 @@
       section {
         text-align: left;
       }
-      .details {
+
+      .popover {
         position: absolute;
-        top: 0;
-        right: 0;
-        width: 400px;
+        background-color: #4d4d4d;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        border-radius: 10px;
+        width: auto;
+        transform: translate(35px, -15px);
+      }
+      .popover:after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: -10px;
+        border-style: solid;
+        border-width: 25px 25px 0;
+        border-color: #4d4d4d transparent;
+        display: block;
+        width: 0;
+        z-index: 1;
+        transform: translate(-50%, 50%) rotate(90deg);
+      }
+      .reveal pre code {
+        max-height: 800px !important;
       }
     </style>
     <link rel="stylesheet" href="/node_modules/reveal.js/dist/reveal.css" />
@@ -51,7 +72,7 @@
       rel="stylesheet"
       href="/node_modules/reveal.js/plugin/highlight/monokai.css"
     />
-    <title>slides-sl</title>
+    <title>Lesson 1</title>
   </head>
 
   <body>
@@ -130,64 +151,454 @@
 
         <section>
           <h3>Categories of Typed Variables</h3>
-          <div style="position: relative">
-            <h4>Scalars (unconsumable)</h4>
-            <li class="fragment fade-in-then-semi-out">Boolean</li>
-            <li class="fragment fade-in-then-semi-out">
-              Integer
 
-              <ul data-fragment-skip class="details fragment fade-in-then-out">
-                <li class="fragment fade-in-then-semi-out">
-                  Unsigned
-                  <ul>
-                    <li class="fragment fade-in-then-semi-out">
-                      u8 through u64
-                    </li>
-                    <li class="fragment fade-in-then-semi-out">
-                      usize (based on machine architecture)
-                    </li>
-                  </ul>
-                </li>
-                <li class="fragment fade-in-then-semi-out">
-                  Signed
-                  <ul>
-                    <li class="fragment fade-in-then-semi-out">
-                      i8 through i64
-                    </li>
-                    <li class="fragment fade-in-then-semi-out">
-                      isize (based on machine architecture)
-                    </li>
-                  </ul>
-                </li>
-                <li class="fragment fade-in-then-semi-out">
-                  Extra credit
-                  <ul>
-                    <li class="fragment fade-in-then-semi-out">
-                      Other base systems (binary, hex, octal)
-                    </li>
-                  </ul>
-                </li>
-              </ul>
+          <h4 class="fragment fade-in-then-semi-out">Scalars (unconsumable)</h4>
+          <li class="fragment fade-in-then-semi-out">Boolean</li>
+
+          <li id="integer" class="fragment fade-in-then-semi-out">
+            Integer
+            <ul data-fragment-skip class="popover fragment fade-in-then-out">
+              <li class="fragment fade-in-then-semi-out">
+                Unsigned
+                <ul>
+                  <li class="fragment fade-in-then-semi-out">u8 through u64</li>
+                  <li class="fragment fade-in-then-semi-out">
+                    usize (based on machine architecture)
+                  </li>
+                </ul>
+              </li>
+              <li class="fragment fade-in-then-semi-out">
+                Signed
+                <ul>
+                  <li class="fragment fade-in-then-semi-out">i8 through i64</li>
+                  <li class="fragment fade-in-then-semi-out">
+                    isize (based on machine architecture)
+                  </li>
+                </ul>
+              </li>
+              <li class="fragment fade-in-then-semi-out">
+                Extra credit
+                <ul>
+                  <li class="fragment fade-in-then-semi-out">
+                    Other base systems (binary, hex, octal)
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li class="fragment fade-in-then-semi-out">
+            Float
+
+            <ul data-fragment-skip class="popover fragment fade-in-then-out">
+              <li class="fragment fade-in-then-semi-out">
+                Signed
+                <ul>
+                  <li class="fragment fade-in-then-semi-out">f32 and f64</li>
+                  <li class="fragment fade-in-then-semi-out">Default is f64</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            Char
+
+            <ul data-fragment-skip class="popover fragment fade-in-then-out">
+              <li class="fragment">
+                A char literal is surrounded by single quotes
+              </li>
+            </ul>
+          </li>
+          <li class="fragment fade-in-then-semi-out">Unit type</li>
+          <li class="fragment fade-in-then-semi-out">
+            Str literal*
+
+            <ul data-fragment-skip class="popover fragment fade-in-then-out">
+              <li class="fragment">Fundamentally immutable</li>
+            </ul>
+          </li>
+
+          <h4 class="fragment fade-in-then-semi-out">Unconsumable Compounds</h4>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">
+              Tuple of unconsumables
             </li>
             <li class="fragment fade-in-then-semi-out">
-              Float
+              Array of unconsumables
+            </li>
+          </ul>
 
-              <ul data-fragment-skip class="details fragment fade-in-then-out">
-                <li class="fragment fade-in-then-semi-out">
-                  Signed
-                  <ul>
-                    <li class="fragment fade-in-then-semi-out">f32 and f64</li>
-                    <li class="fragment fade-in-then-semi-out">
-                      Default is f64
-                    </li>
-                  </ul>
-                </li>
+          <h4 class="fragment fade-in-then-semi-out">Consumable Compounds</h4>
+          <ul>
+            <li class="fragment fade-in-then-semi-out">Tuple of consumables</li>
+            <li class="fragment fade-in-then-semi-out">Array of consumables</li>
+            <li class="fragment fade-in-then-semi-out">
+              Structs
+              <ul>
+                <li class="fragment fade-in-then-semi-out">Vectors</li>
+                <li class="fragment fade-in-then-semi-out">String struct</li>
               </ul>
             </li>
-            <li class="fragment fade-in-then-semi-out">Char</li>
-            <li class="fragment fade-in-then-semi-out">Unit type</li>
-            <li class="fragment fade-in-then-semi-out">Str literal*</li>
-          </div>
+            <li class="fragment fade-in-then-semi-out">Enums</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Declaration of Variables</h3>
+
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Declare with "let", in snake case
+let user_age: f32 = 1.0;
+</span>
+
+<span class="fragment fade-in-then-semi-out">// Redeclaration
+let user_age: f32 = 2.0;</span>
+
+<span class="fragment fade-in-then-semi-out">
+// (type is inferred if omitted)
+let user_age = 3.0; // Default type: f64</span>
+  
+<span class="fragment fade-in-then-semi-out">// Immutable by default
+<span class="fragment strike">user_age = 4.0;</span> // Err</span>
+
+<span class="fragment fade-in-then-semi-out">// Set as mutable
+let mut mutable_age = 5;
+mutable_age = 6; // Works</span>
+
+<span class="fragment fade-in-then-semi-out">// Strict Typing
+<span class="fragment strike">mutable_age = “seven”;</span> // Err</span>
+            </code></pre>
+        </section>
+
+        <section>
+          <h3>Conditional Blocks</h3>
+
+          <pre><code class="rust" data-noescape>let n = 1;
+
+<span class="fragment fade-in-then-semi-out">// No parenthesis
+// Boolean expression
+if n == 1 {
+  // Conditional block
+}</span>
+
+<span class="fragment fade-in-then-semi-out">// Logical operators
+if n > 0 || !(n <= 2 && n != 3) {
+  // Conditional block 
+}</span>
+  
+<span class="fragment fade-in-then-semi-out">
+if n > 0 {
+  // If
+} else if n < 2 {
+  // Else if, can be repeated
+} else {
+  // Else
+}</span>
+
+<span class="fragment fade-in-then-semi-out">// Can have a result value
+let if_result: u32 = if n < 2 {
+  // Last block line is an expression
+  2
+} else {
+  let y = 3;
+  // Last block line is an expression 
+  y
+}; // Notice the semi-colon</span>            
+            </code></pre>
+        </section>
+
+        <section>
+          <h3>Iteration Blocks</h3>
+
+          <pre><code class="rust" data-noescape>let mut i = 0;
+
+<span class="fragment fade-in-then-semi-out">// "while" with boolean expression
+while i < 3 {
+  i += 1;
+}</span>
+
+<span class="fragment fade-in-then-semi-out">// Can't have a result value
+<span class="fragment strike">let result = while i < 3 {
+  4
+};</span></span>
+  
+<span class="fragment fade-in-then-semi-out">// "break" stops the loop
+while i < 3 {
+  if i == 2 {
+    break;
+  }
+}
+// i will be 2</span>
+
+<span class="fragment fade-in-then-semi-out">// "for" loop with excluding range
+for i in 0..3 {
+  // i will be 0, 1, 2
+}</span>
+
+<span class="fragment fade-in-then-semi-out">// "for" loop with including range
+for i in 0..=3 {
+  // i will be 0, 1, 2, 3
+}</span>
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Functions</h3>
+
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// All parameter types declared
+fn add(a: u32, b: u32) -> u32 {
+  return a + b;
+}</span>
+
+<span class="fragment fade-in-then-semi-out">// Return is implied if last line is an expression
+fn add_expr(a: u32, b: u32) -> u32 {
+  a + b
+}</span>
+
+<span class="fragment fade-in-then-semi-out">// Unit type is implied if there is no return
+fn no_return() -> () {
+  ()
+}
+fn equivalent_to_no_return() {
+
+}</span>
+
+<span class="fragment fade-in-then-semi-out">// Functions can be stored in functions pointers
+fn higher_order() {
+  let add_fn: fn(u32, u32) -> u32 = add;
+}</span>
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Closures</h3>
+          <li class="fragment fade-in-then-semi-out">
+            Functions that capture their environment
+          </li>
+
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">
+fn sample() {
+  <span class="fragment fade-in-then-semi-out">// Parmeters inside | |
+  let equal_to_4 = |z: u32| {
+    z == x  // x is captured
+  };</span>
+
+  <span class="fragment fade-in-then-semi-out">// Closures are invoked like functions
+  let is_four_a = equal_to_4(4); // true
+  let is_four_b = equal_to_4(5); // false</span>
+
+  <span class="fragment fade-in-then-semi-out">let x: u32 = 4;
+  // They capture their environment
+  let equal_to_x = |z: u32| {
+    z == x  // x is captured
+  };
+
+  let is_four_a = equal_to_x(4); // true
+  let is_four_b = equal_to_x(5); // false</span>
+
+  <span class="fragment fade-in-then-semi-out">// Parameter types can be inferred
+  let equal_to_x_infer = |z| { // z is of type u32 
+    z == x
+  };</span>
+
+  <span class="fragment fade-in-then-semi-out">// Body can be just an returning expression
+  let equal_to_x_simple = |z| z == x;</span>
+
+  <span class="fragment fade-in-then-semi-out">// Can't be sent to another context
+  <span class="fragment strike">return equal_to_4;</span>// Err</span>
+}</span>
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>String Literal</h3>
+
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// &str
+let s: &str = "hello world!";</span>
+
+<span class="fragment fade-in-then-semi-out">// str is not valid
+<span class="fragment strike">let s: str = "hello world!";</span> // Err</span>
+
+<span class="fragment fade-in-then-semi-out">// Fundamentally immutable
+<span class="fragment strike">let mut s: &str = "hello world!";</span> // Err</span>
+
+<span class="fragment fade-in-then-semi-out">// Copyable
+let s: &str = "hello world!";
+let x = s;
+let y = s; // Ok</span>
+
+<span class="fragment fade-in-then-semi-out">// Sliceable
+let s: &str = "hello world!";
+let slice: &str = &s[0..2]; // "slice" will contain "he" 
+                            // Notice the &</span>
+
+<span class="fragment fade-in-then-semi-out">// Does not support indexing
+let s: &str = "hello world!";
+<span class="fragment strike">let first_char = s[0];</span> // Err</span>  
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Tuples</h3>
+
+          <li class="fragment fade-in-then-semi-out">
+            Bundle of individual elements
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+            The elements can have different types
+          </li>
+
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Tuple declaration
+let tuple_a: (i32, f64, u8) = (0, 1.0, 2);</span>
+
+<span class="fragment fade-in-then-semi-out">// Destructuring a tuple
+let (a0, a1, a2) = tuple_a; // "a0" is 0, "a1" is 1.0, "a2" is 2</span>
+
+<span class="fragment fade-in-then-semi-out">// Element types can be inferred
+let tuple_a = (0, 1.0, 2);</span>
+
+<span class="fragment fade-in-then-semi-out">// Accessing an element by index
+let a0 = tuple_a.0; // "b0" is 0
+let a1 = tuple_a.1; // "b1" is 1.0
+let a2 = tuple_a.2; // "b2" is 2</span>
+
+<span class="fragment fade-in-then-semi-out">// Tuple is copyable if all elements are
+let tuple_a = (0, 1.0, 2);
+let tuple_b = tuple_a;
+let tuple_c = tuple_a; // Ok</span>
+
+<span class="fragment fade-in-then-semi-out">// Tuple is not copyable if some element isn't
+let tuple_a = (0, String::from("hello"), 2);
+let tuple_b = tuple_a;
+<span class="fragment strike">let tuple_b = tuple_a;</span> // Err</span>
+
+<span class="fragment fade-in-then-semi-out">let tuple_a = (String::from("hello"), String::from("world"));
+let a0 = tuple_a.0; // "tuple_a" gets partially consumed
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a0 = tuple_a.0;</span> // Err, first element has already been consumed</span>
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let tuple_b = tuple_a;</span> // Err, first element has already been consumed</span></span>
+<span class="fragment fade-in-then-semi-out">let a1 = tuple_a.1; // Ok, second element has not been consumed</span>
+
+<span class="fragment fade-in-then-semi-out">fn access_elements(tuple_a: &(i32, String)) {
+  <span class="fragment fade-in-then-semi-out">let (a0, a1, a2) = tuple_a; // "a0": &i32, "a1": &String </span>
+  <span class="fragment fade-in-then-semi-out">let a0 = tuple_a.0; // "a0" is of type i32, i32 is copied</span>
+  <span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a1 = tuple_a.1;</span> // Err, cannot consume the String since we only have a ref</span>
+  <span class="fragment fade-in-then-semi-out">let a1 = &tuple_a.1; // Ok, "a1" is of type &String</span>
+}</span>
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Arrays</h3>
+
+          <li class="fragment fade-in-then-semi-out">Ordered sequence</li>
+          <li class="fragment fade-in-then-semi-out">Fixed length</li>
+          <li class="fragment fade-in-then-semi-out">
+            Elements must have the same type
+          </li>
+
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Array declaration
+let array_a: [usize; 4] = [0, 1, 2, 3];</span>
+
+<span class="fragment fade-in-then-semi-out">// Accessing by index
+let a0 = array_a[0]; // "a0" contains 1</span>
+
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a0 = array_a[4];</span> // Out of bounds err</span>
+
+<span class="fragment fade-in-then-semi-out">// Destructuring
+
+// "a0" contains 0, "rest_of_array" contains [1, 2, 3]
+let [a0, rest_of_array @ ..] = array_a;
+<span class="fragment fade-in-then-semi-out">// "a0" contains 0, "a1" contains 1, "rest_of_array" contains [2, 3]
+let [a0, a1, rest_of_array @ ..] = array_a;</span></span>
+
+<span class="fragment fade-in-then-semi-out">let array_a = [String::from("hello"), String::from("world")];
+let a0 = array_a[0]; // "array" gets partially consumed
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a0 = array_a[0]; </span> // Err, first element has already been consumed</span>
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let array_b = array_a;</span> // Err, first element has already been consumed</span></span>
+<span class="fragment fade-in-then-semi-out">let a1 = array_a[1]; // Ok, second element has not been consumed</span>
+
+<span class="fragment fade-in-then-semi-out">fn access_elements_integer_array(array_a: &[i32]) { // Array references don't need a known size
+  <span class="fragment fade-in">let a0 = array_a[0]; // "a0" is of type i32, i32 is copied</span>
+  <span class="fragment fade-in-then-semi-out">let a0 = array_a[0]; // Ok</span>
+}</span>
+
+<span class="fragment fade-in-then-semi-out">fn access_elements_string_array(array_a: &[String]) {
+  <span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a0 = array_a[0];</span> // Err, cannot consume the String since we only have a ref</span>
+  <span class="fragment fade-in-then-semi-out">let a0 = &array_a[0]; // Ok, "a0" is of type &String</span>
+  <span class="fragment fade-in-then-semi-out">let a0 = &array_a[0]; // Ok, "a0" is of type &String</span>
+}</span>
+
+<span class="fragment fade-in-then-semi-out">// Sliceable
+let array_a = [0, 1, 2, 3];
+<span class="fragment fade-in-then-semi-out"><span class="fragment strike">let array_slice = array_a[0..2];</span> // Err, cannot have a slice without a reference</span>
+<span class="fragment fade-in-then-semi-out">let array_slice = &array_a[0..2]; // Ok, array_slice will be a reference to [0, 1]</span></span>
+</code></pre>
+        </section>
+
+        <section>
+          <h3>For In and Iterators</h3>
+
+          <li class="fragment fade-in-then-semi-out">For in can iterate over any iterator</li>
+          <!-- TODO: Introducing iterators here feels really weird-->
+
+<pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">let array_a = [0, 1, 2, 3];
+for i in array {
+  // i will be 0, 1, 2, 3
+}</span>
+
+<span class="fragment fade-in-then-semi-out">let array_a = [0, 1, 2, 3];
+for i in array.iter() { // .iter() produces an iterator
+  // i will be 0, 1, 2, 3
+}</span>
+
+<span class="fragment fade-in-then-semi-out">let array_a = [0, 1, 2, 3];
+let array_a1: Vec&lt;usize&gt; = array_a.iter() <!-- TODO: What to do? We can't talk about vectors yet -->
+  <span class="fragment fade-in">.map(|integer| integer + 1) // Executes the closure and maps the result</span>
+  <span class="fragment fade-in">.collect();  // Collect converts an iterator into a vector, "array_a1" will contain vec![1, 2, 3, 4]</span>
+<span class="fragment fade-in">let array_a2 = array_a1; // Ok, .iter() doesn't consume "array_a"</span></span>
+
+<span class="fragment fade-in-then-semi-out">let array_a = [0, 1, 2, 3];
+let array_a1 = array_a.into_iter() // .into_iter() also produces an iterator
+  .map(|integer| integer + 1) // Executes the closure and maps the result
+  .collect(); // Collect converts an iterator into a vector, "array_a1" will contain vec![1, 2, 3, 4]
+<span class="fragment fade-in">let array_a2 = array_a1; // Ok, "array_a" is copiable</span></span>
+  
+<span class="fragment fade-in-then-semi-out">let array_b = [String::from("hello"), String::from("world")];
+let array_b1: Vec&lt;&String&gt; = array_a.iter()
+  .filter(|s: &&String| s.starts_with('h')) // Only return the elements for which the closure returns true
+  .collect(); // Collect converts an iterator into a vector, "array_b1" will contain vec![&String::from("hello")]
+<span class="fragment fade-in">let array_b1 = array_b; // Ok, .iter() doesn't consume "array_a"</span></span>
+
+<span class="fragment fade-in-then-semi-out">let array_b = [String::from("hello"), String::from("world")];
+let array_b1: Vec&lt;String&gt; = array_a.into_iter()
+  .filter(|s: &String| s.starts_with('h')) // Only return the elements for which the closure returns true
+  .collect(); // Collect converts an iterator into a vector, "array_b1" will contain vec![String::from("hello")]
+<span class="fragment fade-in"><span class="fragment strike">let array_b1 = array_b;</span> // Err, .into_iter() consumed "array_a"</span></span>
+</code></pre>
+
+        </section>
+
+        <section>
+          <h3>println</h3>
+
+          <li class="fragment fade-in-then-semi-out">Declarative macro
+          <ul><li class="fragment fade-in-then-semi-out">Similar to functions, but invoked with '!'</li>
+            <li class="fragment fade-in-then-semi-out">We won't cover them for a long time</li></ul>
+        </li>
+
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">fn main() {
+  // Output to stdout
+  println!("Hello world!");
+
+  <span class="fragment fade-in-then-semi-out">let x = 0;
+  let y = 1;
+  println!("x is equal to {}, y is equal to {}", x, y); // will print "x is equal to 0, y is equal to 1"</span>
+
+  <span class="fragment fade-in-then-semi-out">let array = [String::from("hello"), String::from("world")];
+  <span class="fragment fade-in-then-semi-out"><span class="fragment strike">println!("array is equal to {}", array);</span> // Err, compound types cannot be printed with {}</span>
+  <span class="fragment fade-in">println!("array is equal to {:?}", array); // Ok, will print "array is equal to ["hello", "world"]"</span>
+  <span class="fragment fade-in">println!("array is equal to {:?}", array); // Ok, println! doesn't consume</span></span>
+}</span>
+  </code></pre>
         </section>
       </div>
     </div>

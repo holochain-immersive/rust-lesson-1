@@ -1,16 +1,16 @@
-import nodeResolve from '@rollup/plugin-node-resolve';
-import babel from '@rollup/plugin-babel';
-import html from '@web/rollup-plugin-html';
-import { terser } from 'rollup-plugin-terser';
+import nodeResolve from "@rollup/plugin-node-resolve";
+import babel from "@rollup/plugin-babel";
+import html from "@web/rollup-plugin-html";
+import { terser } from "rollup-plugin-terser";
 
 export default {
-  input: 'index.html',
+  input: "index.html",
   output: {
-    entryFileNames: '[hash].js',
-    chunkFileNames: '[hash].js',
-    assetFileNames: '[hash][extname]',
-    format: 'es',
-    dir: 'dist',
+    entryFileNames: "[hash].js",
+    chunkFileNames: "[hash].js",
+    assetFileNames: "[hash][extname]",
+    format: "es",
+    dir: "dist",
   },
   preserveEntrySignatures: false,
 
@@ -18,6 +18,7 @@ export default {
     /** Enable using HTML as rollup entrypoint */
     html({
       minify: true,
+      publicPath: "lesson-1",
     }),
     /** Resolve bare module imports */
     nodeResolve(),
@@ -25,16 +26,16 @@ export default {
     terser(),
     /** Compile JS to a lower language target */
     babel({
-      babelHelpers: 'bundled',
+      babelHelpers: "bundled",
       presets: [
         [
-          require.resolve('@babel/preset-env'),
+          require.resolve("@babel/preset-env"),
           {
             targets: [
-              'last 3 Chrome major versions',
-              'last 3 Firefox major versions',
-              'last 3 Edge major versions',
-              'last 3 Safari major versions',
+              "last 3 Chrome major versions",
+              "last 3 Firefox major versions",
+              "last 3 Edge major versions",
+              "last 3 Safari major versions",
             ],
             modules: false,
             bugfixes: true,
@@ -43,9 +44,9 @@ export default {
       ],
       plugins: [
         [
-          require.resolve('babel-plugin-template-html-minifier'),
+          require.resolve("babel-plugin-template-html-minifier"),
           {
-            modules: { lit: ['html', { name: 'css', encapsulation: 'style' }] },
+            modules: { lit: ["html", { name: "css", encapsulation: "style" }] },
             failOnError: false,
             strictCSS: true,
             htmlMinifier: {

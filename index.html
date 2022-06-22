@@ -258,7 +258,7 @@ let array_b1: Vec&lt;String&gt; = array_a.into_iter()
   .filter(|s: &amp;String| s.starts_with('h')) // Only return the elements for which the closure returns true
   .collect(); // Collect converts an iterator into a vector, "array_b1" will contain vec![String::from("hello")]
 <span class="fragment fade-in"><span class="fragment strike">let array_b1 = array_b;</span> // Err, .into_iter() consumed "array_a"</span></span>
-</code></pre></section><section><h3>println</h3><li class="fragment fade-in-then-semi-out">Declarative macro<ul><li class="fragment fade-in-then-semi-out">Similar to functions, but invoked with '!'</li><li class="fragment fade-in-then-semi-out">We won't cover them for a long time</li></ul></li><pre><code class="rust" data-noescape=""><span class="fragment fade-in-then-semi-out">fn main() {
+</code></pre></section><section><h3>println!()</h3><li class="fragment fade-in-then-semi-out">Declarative macro<br><ul><li class="fragment fade-in-then-semi-out">Similar to functions, but invoked with '!'</li><li class="fragment fade-in-then-semi-out">We won't cover them for a long time</li></ul></li><pre><code class="rust" data-noescape=""><span class="fragment fade-in-then-semi-out">fn main() {
   // Output to stdout
   println!("Hello world!");
 

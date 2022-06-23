@@ -438,7 +438,7 @@ let s: &str = "hello world!";
         </section>
 
         <section>
-          <h3>Tuples</h3>
+          <h3>Tuples: basics</h3>
 
           <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Bundle of elements of different type
 let tuple_a: (i32, f64, u8) = (0, 1.0, 2);</span>
@@ -453,8 +453,13 @@ let tuple_a = (0, 1.0, 2);</span>
 let a0 = tuple_a.0; // "b0" is 0
 let a1 = tuple_a.1; // "b1" is 1.0
 let a2 = tuple_a.2; // "b2" is 2</span>
+</code></pre>
+        </section>
 
-<span class="fragment fade-in-then-semi-out">// Tuple is copyable if all elements are
+        <section>
+          <h3>Tuples: ownership and mutability</h3>
+
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Tuple is copyable if all elements are
 let tuple_a = (0, 1.0, 2);
 let tuple_b = tuple_a;
 let tuple_c = tuple_a; // Ok</span>
@@ -470,12 +475,27 @@ let a0 = tuple_a.0; // "tuple_a" gets partially consumed
 <span class="fragment fade-in-then-semi-out"><span class="fragment strike">let tuple_b = tuple_a;</span> // Err, first element has already been consumed</span></span>
 <span class="fragment fade-in-then-semi-out">let a1 = tuple_a.1; // Ok, second element has not been consumed</span>
 
+<span class="fragment fade-in-then-semi-out">let tuple_a = (String::from("hello"), String::from("world"));
+let mut a0 = tuple_a.0; // Ok, we are taking ownership of "tuple_a.0"</span>
+
 <span class="fragment fade-in-then-semi-out">fn access_elements(tuple_a: &(i32, String)) {
   <span class="fragment fade-in-then-semi-out">let (a0, a1, a2) = tuple_a; // "a0": &i32, "a1": &String </span>
   <span class="fragment fade-in-then-semi-out">let a0 = tuple_a.0; // "a0" is of type i32, i32 is copied</span>
   <span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a1 = tuple_a.1;</span> // Err, cannot consume the String since we only have a ref</span>
   <span class="fragment fade-in-then-semi-out">let a1 = &tuple_a.1; // Ok, "a1" is of type &String</span>
+
+  <span class="fragment fade-in-then-semi-out">let mut a0 = tuple_a.0; // Ok, i32 is copied so we own "a0"</span>
+  <span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a1 = tuple_a.1;</span> // Err, cannot consume the String since we only have a ref</span>
+  <span class="fragment fade-in-then-semi-out">let mut a1 = &tuple_a.1; // Ok, "a0" is still of type &String, can be reassigned </span>
+  <span class="fragment fade-in-then-semi-out"><span class="fragment strike">let a1 = &mut tuple_a.1;</span> // Err, cannot create a mutable reference to an element of a tuple reference</span>
 }</span>
+
+<span class="fragment fade-in-then-semi-out">fn access_elements_mut(tuple_a: &mut (i32, String)) {
+  <span class="fragment fade-in">let a1 = &mut tuple_a.1; // Ok</span>
+  <span class="fragment fade-in"><span class="fragment strike">let b1 = &mut tuple_a.1; // Ok
+  *a1 = String::from(""); // Err, can't have multiple mutable references</span></span>
+}</span>
+
 </code></pre>
         </section>
 
@@ -519,7 +539,7 @@ let a0 = array_a[0]; // "array" gets partially consumed
 let array_a = [0, 1, 2, 3];
 <span class="fragment fade-in-then-semi-out"><span class="fragment strike">let array_slice = array_a[0..2];</span> // Err, cannot have a slice without a reference</span>
 <span class="fragment fade-in-then-semi-out">let array_slice = &array_a[0..2]; // Ok, array_slice will be a reference to [0, 1]</span></span>
-</code></pre>
+</code></pre> <!-- TODO: replicate same structure as in tuples with regards to ownership and mutability? -->
         </section>
 
         <section>
@@ -570,7 +590,7 @@ let array_b1: Vec&lt;String&gt; = array_a.into_iter()
           <h3>println!()</h3>
 
           <li class="fragment fade-in-then-semi-out">
-            Declarative macro<br>
+            Declarative macro<br />
             <ul>
               <li class="fragment fade-in-then-semi-out">
                 Similar to functions, but invoked with '!'

@@ -440,14 +440,7 @@ let s: &str = "hello world!";
         <section>
           <h3>Tuples</h3>
 
-          <li class="fragment fade-in-then-semi-out">
-            Bundle of individual elements
-          </li>
-          <li class="fragment fade-in-then-semi-out">
-            The elements can have different types
-          </li>
-
-          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Tuple declaration
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Bundle of elements of different type
 let tuple_a: (i32, f64, u8) = (0, 1.0, 2);</span>
 
 <span class="fragment fade-in-then-semi-out">// Destructuring a tuple
@@ -489,13 +482,8 @@ let a0 = tuple_a.0; // "tuple_a" gets partially consumed
         <section>
           <h3>Arrays</h3>
 
-          <li class="fragment fade-in-then-semi-out">Ordered sequence</li>
-          <li class="fragment fade-in-then-semi-out">Fixed length</li>
-          <li class="fragment fade-in-then-semi-out">
-            Elements must have the same type
-          </li>
-
-          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Array declaration
+          <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Sequence of fixed length
+// Elements must have the same type
 let array_a: [usize; 4] = [0, 1, 2, 3];</span>
 
 <span class="fragment fade-in-then-semi-out">// Accessing by index

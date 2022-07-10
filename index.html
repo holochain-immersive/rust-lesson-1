@@ -223,23 +223,20 @@
 
         <h4 class="fragment fade-in-then-semi-out">Unconsumable Compounds</h4>
         <li class="fragment fade-in-then-semi-out">
-          Tuple of unconsumables
-        </li>
-        <li class="fragment fade-in-then-semi-out">
-          Array of unconsumables
+          Tuple or array of unconsumables
         </li>
 
         <h4 class="fragment fade-in-then-semi-out">Consumable Compounds</h4>
-        <li class="fragment fade-in-then-semi-out">Tuple of consumables</li>
-        <li class="fragment fade-in-then-semi-out">Array of consumables</li>
+        <li class="fragment fade-in-then-semi-out">Tuple or array of consumables</li>
         <li class="fragment fade-in-then-semi-out">
           Structs
         </li>
         <ul>
           <li class="fragment fade-in-then-semi-out">Vectors</li>
           <li class="fragment fade-in-then-semi-out">String struct</li>
+          <li class="fragment fade-in-then-semi-out">Custom structs</li>
         </ul>
-        <li class="fragment fade-in-then-semi-out">Enums</li>
+        <li class="fragment fade-in-then-semi-out">Enums</li><!-- todo: get this last bullet to fade out separately, before the slide is transitioned away-->
       </section>
 
       <section>
@@ -247,10 +244,10 @@
 
         <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Declare with "let", in snake case
 let user_age: f32 = 1.0;
-</span>
 
-<span class="fragment fade-in-then-semi-out">// Redeclaration
-let user_age: f32 = 2.0;</span>
+<span class="fragment">// Redeclaration
+let user_age: f32 = 2.0;
+</span></span>
 
 <span class="fragment fade-in-then-semi-out">
 // (type is inferred if omitted)
@@ -271,31 +268,30 @@ mutable_age = 6; // Works</span>
       <section>
         <h3>Conditional Blocks</h3>
 
-        <pre><code class="rust" data-noescape>let n = 1;
+        <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">let n = 1;</span>
 
-<span class="fragment fade-in-then-semi-out">// No parenthesis
-// Boolean expression
-if n == 1 {
-  // Conditional block
+<span class="fragment fade-in-then-semi-out">
+if n == 1 { // No parenthesis
+  2
 }</span>
 
 <span class="fragment fade-in-then-semi-out">// Can have a result value
-let if_result: u32 = if n < 2 {
+<span class="fragment">let if_result: u32 = if n < 2 {
   2
 } else {
   3
-}; // Notice the semi-colon</span></code></pre>
+};<span class="fragment"> // Notice the semi-colon</span></span></span></code></pre>
       </section>
 
       <section>
         <h3>Iteration Blocks</h3>
 
-        <pre><code class="rust" data-noescape>let mut i = 0;
+        <pre><code class="rust" data-noescape><span class="fragment">let mut i = 0;</span>
 
-<span class="fragment fade-in-then-semi-out">// Iteration blocks can't provide a result value
-<span class="fragment strike">let result = while i < 3 {
+<span class="fragment fade-in-then-semi-out">// Iteration blocks cannot provide a result value
+<span class="fragment"><span class="fragment strike">let result = while i < 3 {
   4
-};</span></span>
+};</span></span></span>
   
 <span class="fragment fade-in-then-semi-out">// "for" loop with excluding range
 for i in 0..3 {
@@ -312,60 +308,58 @@ for i in 0..=3 {
       <section>
         <h3>Functions</h3>
 
-        <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// All parameter types declared
-fn add(a: u32, b: u32) -> u32 {
+        <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// All parameter types are declared in a function signature</span>
+<span class="fragment fade-in-then-semi-out">fn add(a: u32, b: u32) -> u32 {
   return a + b;
 }</span>
 
 <span class="fragment fade-in-then-semi-out">// Return is implied if last line is an expression
-fn add_expr(a: u32, b: u32) -> u32 {
+<span class="fragment fade-in-then-semi-out">fn add_expr(a: u32, b: u32) -> u32 {
   a + b
-}</span>
+}</span></span>
 
 <span class="fragment fade-in-then-semi-out">// Unit type is implied if there is no return
-fn no_return() -> () {
+<span class="fragment fade-in-then-semi-out">fn no_return() -> () {
   ()
 }
 fn equivalent_to_no_return() {
 
-}</span>
+}</span></span>
 
 <span class="fragment fade-in-then-semi-out">// Functions can be stored in functions pointers
-fn higher_order() {
+<span class="fragment fade-in-then-semi-out">fn higher_order() {
   let add_fn: fn(u32, u32) -> u32 = add;
-}</span></code></pre>
+}</span></span></code></pre>
       </section>
 
       <section>
-        <h3>Closures</h3>
-        <li class="fragment fade-in-then-semi-out">
-          Functions that capture their environment
-        </li>
+        <h3>Closures (Functions that capture their environment)</h3>
 
-        <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out"
->fn sample() {
+        <pre><code class="rust" data-noescape><span class="fragment fade-in-then-semi-out">// Here's a simple function (not a closure), which we will use 
+// as the closure's containing scope environment
+<span class="fragment">fn sample() {
     <span class="fragment fade-in-then-semi-out">let heavy_weight = 100;</span>
 
-    <span class="fragment fade-in-then-semi-out">// A closure looks similar to a function, with || for the parameter list <!-- todo: consolidate this example and the parameter type inference into one visual -->
-    let is_heavy_closure = |weight: u32| {
+    <span class="fragment fade-in-then-semi-out">// A closure resembles a function, but with "||" rather than "()" around the parameters<!-- todo: consolidate this example and the parameter type inference into one visual -->
+    <span class="fragment">let is_heavy_closure = |weight: u32| {
       weight > heavy_weight  // Closures capture variables from their containing scope
     };
-    </span>
+    </span></span>
     <span class="fragment fade-in-then-semi-out">// Closures are invoked like functions
-    println!("{}", is_heavy_closure(99)); // prints false
+    <span class="fragment">println!("{}", is_heavy_closure(99)); // prints false
     println!("{}", is_heavy_closure(101)); // prints true
-    </span>
+    </span></span>
     <span class="fragment fade-in-then-semi-out">// Parameter types can be inferred
-    let is_heavy_closure_with_type_inference = |weight| { 
+    <span class="fragment">let is_heavy_closure_with_type_inference = |weight| { 
       weight > heavy_weight
     };
-    </span>
+    </span></span>
     <span class="fragment fade-in-then-semi-out">// If the return expression is a single line, we don't need the curly braces
-    let is_heavy_closure_with_without_braces = |weight| weight > heavy_weight;
-    </span>
+    <span class="fragment">let is_heavy_closure_with_without_braces = |weight| weight > heavy_weight;
+    </span></span>
     <span class="fragment fade-in-then-semi-out">// Can't be sent to another context
     <span class="fragment strike">return is_heavy_closure;</span><span>// Err</span></span>
-}</span></code></pre>
+}</span></span></code></pre>
       </section>
       <!-- @Muhammad: Insert Move Semantics slides here  -->
       <section>

@@ -361,7 +361,9 @@ for i in 0..=3 {
   <span class="fragment"><span class="fragment strike">return is_heavy_closure;</span><span>// Err</span></span></span>
 }</span></span><span class="fragment"></span></code></pre>
       </section>
-      <!-- @Muhammad: Insert Move Semantics slides here  -->
+      <section>
+        <h1>Move Semantics</h1>
+      </section>
       <section>
         <h3>String Literal</h3>
 
@@ -435,7 +437,7 @@ let third  = settings.2;<span class="fragment"> // "third" is 3</span></span></s
   <span class="fragment fade-in"><span class="fragment strike">*a1 = String::from("");</span> <span class="fragment">// Err, can't have multiple mutable references</span></span>
 }</span>
 --><span class="fragment"></span></code></pre>
-</section>
+      </section>
 
       <section>
         <h3>Arrays</h3>
@@ -472,7 +474,8 @@ let third  = settings.2;<span class="fragment"> // "third" is 3</span></span></s
   <span class="fragment fade-in-then-semi-out">let a0 = &words[0]; // Ok, "a0" is of type &String</span>
   <span class="fragment fade-in-then-semi-out">let a0 = &words[0]; // Ok, "a0" is of type &String</span>
 }</span>
-<span class="fragment"></span></code></pre> <!-- TODO: replicate same structure as in tuples with regards to ownership and mutability? -->
+<span class="fragment"></span></code></pre>
+        <!-- TODO: replicate same structure as in tuples with regards to ownership and mutability? -->
       </section>
 
       <section>
